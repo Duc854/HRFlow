@@ -54,12 +54,12 @@ Hệ thống được tổ chức thành 4 nhóm bảng chính:
 
 Dự án được tổ chức theo mô hình phân lớp (Layered Architecture) nhằm đảm bảo tính tách biệt giữa các thành phần (Separation of Concerns) và khả năng mở rộng
 - **Backend (Web API):**
-- **Phân chia theo 3 lớp chính (Core Layers):**
-   - **API (Presentation Layer):** Chịu trách nhiệm tiếp nhận HTTP Requests, xử lý xác thực JWT và điều hướng dữ liệu.
+   - **Phân chia theo 3 lớp chính (Core Layers):**
+      - **API (Presentation Layer):** Chịu trách nhiệm tiếp nhận HTTP Requests, xử lý xác thực JWT và điều hướng dữ liệu.
 
-   - **Business (Logic Layer):** Nơi chứa toàn bộ nghiệp vụ (Business Logic), các dịch vụ (Services) và xử lý tính toán.
+      - **Business (Logic Layer):** Nơi chứa toàn bộ nghiệp vụ (Business Logic), các dịch vụ (Services) và xử lý tính toán.
 
-   - **Data (Infrastructure Layer):** Quản lý kết nối SQL Server thông qua Entity Framework Core, Repository Pattern và thực hiện các thao tác Migrations.
+      - **Data (Infrastructure Layer):** Quản lý kết nối SQL Server thông qua Entity Framework Core, Repository Pattern và thực hiện các thao tác Migrations.
 - **Frontend (Web Portal):**
    - **WebPortal (ASP.NET MVC):** Đóng vai trò là lớp hiển thị và điều phối giao diện. Thay vì xử lý logic nặng, nó gọi qua Web API để lấy dữ liệu.
    - **HTMX Integration:** Được tích hợp vào các View của MVC để thực hiện các yêu cầu AJAX không đồng bộ, giúp cập nhật từng phần của giao diện mà không cần tải lại toàn bộ trang (Partial Rendering)
