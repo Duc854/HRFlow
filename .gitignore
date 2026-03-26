@@ -1,0 +1,35 @@
+## [ Root: HRFlow ] ##
+
+# Build results (Quan trọng nhất để không push file .dll, .exe)
+**/bin/
+**/obj/
+**/publish/
+
+# Visual Studio files (Thư mục .vs rất nặng, tuyệt đối không push)
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Database & Temporary files
+*.opendb
+*.db
+*.db-shm
+*.db-wal
+
+# .NET Core / .NET 8
+project.lock.json
+project.fragment.lock.json
+.vshistory/
+artifacts/
+
+**/appsettings.Development.json
+
+# Frontend (Web Portal) - Nếu sau này có dùng thư viện ngoài
+**/wwwroot/lib/
+**/node_modules/
+
+# OS Files
+.DS_Store
+Thumbs.db
