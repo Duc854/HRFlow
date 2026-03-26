@@ -12,12 +12,6 @@ A modern HR Management System built with .NET 8 Web API &amp; ASP.NET MVC. Lever
 * **ORM:** Entity Framework Core (Code First)
 * **Security:** JWT (JSON Web Token) với cơ chế xác thực phân quyền (RBAC)
 
-### Frontend (Web Portal)
-* **Framework:** ASP.NET Core MVC (BFF Pattern - Backend for Frontend)
-* **UI Interactivity:** [HTMX](https://htmx.org/) (AJAX-based partial rendering)
-* **Styling:** Bootstrap 5
-* **Storage:** LocalStorage / HttpOnly Cookie
-
 ---
 
 ## 📊 Database Schema
@@ -60,9 +54,6 @@ Dự án được tổ chức theo mô hình phân lớp (Layered Architecture) 
       - **Business (Logic Layer):** Nơi chứa toàn bộ nghiệp vụ (Business Logic), các dịch vụ (Services) và xử lý tính toán.
 
       - **Data (Infrastructure Layer):** Quản lý kết nối SQL Server thông qua Entity Framework Core, Repository Pattern và thực hiện các thao tác Migrations.
-- **Frontend (Web Portal):**
-   - **WebPortal (ASP.NET MVC):** Đóng vai trò là lớp hiển thị và điều phối giao diện. Thay vì xử lý logic nặng, nó gọi qua Web API để lấy dữ liệu.
-   - **HTMX Integration:** Được tích hợp vào các View của MVC để thực hiện các yêu cầu AJAX không đồng bộ, giúp cập nhật từng phần của giao diện mà không cần tải lại toàn bộ trang (Partial Rendering)
 
 ---
 
