@@ -29,12 +29,14 @@ namespace Business.InternalServices
 
             // Khởi tạo danh sách Claims cơ bản
             var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-        new Claim(ClaimTypes.Name, user.Username),
-        new Claim(JwtRegisteredClaimNames.Email, user.Email),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-    };
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.Username),
+                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim("EmployeeId", user.EmployeeId?.ToString() ?? ""),
+                    new Claim("DepartmentId", user.Employee?.DepartmentId.ToString() ?? ""),
+                };
 
             // Lấy tất cả Roles của User và thêm vào Claims
             if (user.UserRoles != null)

@@ -7,21 +7,36 @@ namespace Presentation.Extensions
     {
         public static UserIdentity? GetUserIdentity(this HttpContext httpContext)
         {
+            // 1. Kiểm tra xem User đã qua middleware Authentication chưa
             if (httpContext.User.Identity?.IsAuthenticated != true)
                 return null;
-            var userIdClaim = httpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-            var usernameClaim = httpContext.User.FindFirst(ClaimTypes.Name);
-            var roleClaim = httpContext.User.FindFirst(ClaimTypes.Role);
 
-            if (userIdClaim == null) throw new InvalidOperationException("UserId claim is missing");
-            if (usernameClaim == null) throw new InvalidOperationException("Username claim is missing");
-            if (roleClaim == null) throw new InvalidOperationException("Role claim is missing");
+            var user = httpContext.User;
 
+            // 2. Trích xuất thông tin cơ bản
+            // Dùng TryParse cho an toàn, tránh văng Exception không đáng có
+            int.TryParse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId);
+
+            // Lấy EmployeeId và DepartmentId (đã nhét vào Token lúc Generate)
+            int? employeeId = int.TryParse(user.FindFirst("EmployeeId")?.Value, out int eId) ? eId : null;
+            int? departmentId = int.TryParse(user.FindFirst("DepartmentId")?.Value, out int dId) ? dId : null;
+
+            var username = user.FindFirst(ClaimTypes.Name)?.Value ?? string.Empty;
+
+            // 3. Xử lý đa quyền hạn (n-n Role)
+            // QUAN TRỌNG: Phải dùng FindAll vì một User có thể có nhiều Claim Role
+            var roles = user.FindAll(ClaimTypes.Role)
+                            .Select(c => c.Value)
+                            .ToList();
+
+            // 4. Trả về Object UserIdentity sạch sẽ cho Business dùng
             return new UserIdentity
             {
-                UserId = userIdClaim.Value,
-                Username = usernameClaim.Value,
-                Role = roleClaim.Value
+                UserId = userId,
+                EmployeeId = employeeId,
+                DepartmentId = departmentId,
+                Username = username,
+                Roles = roles
             };
         }
     }
