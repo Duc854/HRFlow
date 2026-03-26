@@ -1,7 +1,7 @@
 ﻿using Shared.Models;
 using System.Security.Claims;
 
-namespace Presentation.Extensions
+namespace API.Extensions
 {
     public static class HttpContextExtensions
     {
@@ -14,7 +14,6 @@ namespace Presentation.Extensions
             var user = httpContext.User;
 
             // 2. Trích xuất thông tin cơ bản
-            // Dùng TryParse cho an toàn, tránh văng Exception không đáng có
             int.TryParse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId);
 
             // Lấy EmployeeId và DepartmentId (đã nhét vào Token lúc Generate)
@@ -24,7 +23,6 @@ namespace Presentation.Extensions
             var username = user.FindFirst(ClaimTypes.Name)?.Value ?? string.Empty;
 
             // 3. Xử lý đa quyền hạn (n-n Role)
-            // QUAN TRỌNG: Phải dùng FindAll vì một User có thể có nhiều Claim Role
             var roles = user.FindAll(ClaimTypes.Role)
                             .Select(c => c.Value)
                             .ToList();

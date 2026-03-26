@@ -37,6 +37,7 @@ namespace Data.Persistence.Repositories
         public async Task<User?> GetByUsernameAsync(string username)
         {
             return await _context.Users
+                .Include(u => u.Employee)
                 .Include(u => u.UserRoles)
                     .ThenInclude(ur => ur.Role)
                 .FirstOrDefaultAsync(u => u.Username == username);
