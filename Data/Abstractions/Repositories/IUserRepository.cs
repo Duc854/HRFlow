@@ -9,6 +9,8 @@ namespace Data.Abstractions.Repositories
 {
     public interface IUserRepository
     {
+        Task<User?> GetByEmployeeIdAsync(int employeeId);
+        Task<User?> GetByIdAsync(int id);
         Task<List<User?>> GetAllUserForCloneData();
         Task<User?> GetByUsernameAsync(string username);
         Task<User?> GetByRefreshTokenAsync(string refreshToken);

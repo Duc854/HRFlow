@@ -15,6 +15,20 @@ namespace Data.Persistence.Repositories
         private readonly ApplicationDbContext _context;
         public UserRepository(ApplicationDbContext context) => _context = context;
 
+
+        public async Task<User?> GetByEmployeeIdAsync(int employeeId)
+        {
+            return await _context.Users
+                .FirstOrDefaultAsync(u => u.EmployeeId == employeeId && !u.IsDeleted);
+        }
+
+        public async Task<User?> GetByIdAsync(int id)
+        {
+            return await _context.Users
+                .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+                .FirstOrDefaultAsync(u => u.Id == id);
+        }
         public async Task<List<User?>> GetAllUserForCloneData()
         {
             return await _context.Users.ToListAsync();

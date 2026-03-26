@@ -17,6 +17,7 @@ namespace Business.Persistence
         private IDbContextTransaction? _transaction;
 
         private IUserRepository? _users;
+        private IEmployeeRepository? _employees;
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -24,6 +25,7 @@ namespace Business.Persistence
         }
 
         public IUserRepository Users => _users ??= new UserRepository(_context);
+        public IEmployeeRepository Employees => _employees ??= new EmployeeRepository(_context);
 
         public async Task<int> CommitAsync()
         {
