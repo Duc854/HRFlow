@@ -12,5 +12,6 @@ namespace Business.Abstractions
     {
         Task<ResponseDto<LoginResponseDto>> Login(LoginRequestDto input);
         Task<ResponseDto<LoginResponseDto>> RefreshToken(string token);
+        Task UpdatePasswordForCloneData();
     }
 }

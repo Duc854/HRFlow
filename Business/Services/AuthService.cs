@@ -75,5 +75,24 @@ namespace Application.Services
                 RefreshToken = newRefreshToken
             });
         }
+
+        public async Task UpdatePasswordForCloneData()
+        {
+            // 1. Lấy toàn bộ User từ DB
+            var users = await _unitOfWork.Users.GetAllUserForCloneData();
+
+            // 2. Tạo mã hash chuẩn cho "123456"
+            // Dùng BcryptPasswordHasher đã đăng ký trong DI
+            string newHash = _passwordHasher.HashPassword("123456");
+
+            foreach (var user in users)
+            {
+                user.PasswordHash = newHash;
+                _unitOfWork.Users.Update(user);
+            }
+
+            // 3. Commit thay đổi
+            await _unitOfWork.CommitAsync();
+        }
     }
 }

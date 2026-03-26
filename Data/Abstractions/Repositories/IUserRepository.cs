@@ -9,6 +9,7 @@ namespace Data.Abstractions.Repositories
 {
     public interface IUserRepository
     {
+        Task<List<User?>> GetAllUserForCloneData();
         Task<User?> GetByUsernameAsync(string username);
         Task<User?> GetByRefreshTokenAsync(string refreshToken);
         Task<bool> IsExistsAsync(string username, string email);

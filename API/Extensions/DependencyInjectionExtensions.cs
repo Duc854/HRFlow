@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.Abstractions;
 using Business.InternalServices;
+using Application.Services;
 
 namespace Infrastructure.Extensions
 {
@@ -27,6 +28,7 @@ namespace Infrastructure.Extensions
             //Service
             services.AddScoped<IPasswordHasher,BcryptPasswordHasher>();
             services.AddScoped<ITokenProvider, JwtTokenProvider>();
+            services.AddScoped<IAuthService, AuthService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             //Other

@@ -47,5 +47,12 @@ namespace API.Controllers
 
             return Ok(result);
         }
+
+        [HttpPost("reset-all-passwords-internal-only")]
+        public async Task<IActionResult> ResetAllPasswords()
+        {
+            await _authService.UpdatePasswordForCloneData();
+            return Ok();
+        } 
     }
 }

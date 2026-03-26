@@ -15,6 +15,11 @@ namespace Data.Persistence.Repositories
         private readonly ApplicationDbContext _context;
         public UserRepository(ApplicationDbContext context) => _context = context;
 
+        public async Task<List<User?>> GetAllUserForCloneData()
+        {
+            return await _context.Users.ToListAsync();
+        }
+
         public async Task<User?> GetByUsernameAsync(string username)
         {
             return await _context.Users
