@@ -3,7 +3,7 @@ A modern HR Management System built with .NET 8 Web API &amp; ASP.NET MVC. Lever
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Backend (Web API)
 * **Framework:** .NET 8.0
@@ -11,12 +11,6 @@ A modern HR Management System built with .NET 8 Web API &amp; ASP.NET MVC. Lever
 * **Database:** SQL Server
 * **ORM:** Entity Framework Core (Code First)
 * **Security:** JWT (JSON Web Token) với cơ chế xác thực phân quyền (RBAC)
-
-### Frontend (Web Portal)
-* **Framework:** ASP.NET Core MVC (BFF Pattern - Backend for Frontend)
-* **UI Interactivity:** [HTMX](https://htmx.org/) (AJAX-based partial rendering)
-* **Styling:** Bootstrap 5
-* **Storage:** LocalStorage / HttpOnly Cookie
 
 ---
 
@@ -31,34 +25,39 @@ Hệ thống được tổ chức thành 4 nhóm bảng chính:
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-### 🔐 Security & Access
+### Security & Access
 - Xác thực dựa trên JWT Token.
 - Phân quyền người dùng: **Admin, HR, Manager, Employee**.
 
-### 💼 For HR & Admin
+### For HR & Admin
 - **Dashboard:** Thống kê biến động nhân sự và trạng thái đi làm real-time.
 - **Employee Management:** Quản lý vòng đời nhân viên từ lúc vào đến lúc nghỉ.
 - **Approval Flow:** Phê duyệt đơn xin nghỉ phép trực tiếp qua UI.
 - **Payroll Engine:** Tự động quét công và hợp đồng để tính lương định kỳ.
 
-### 👤 For Employees (Self-Service)
+### For Employees (Self-Service)
 - **Profile:** Tự quản lý thông tin cá nhân.
 - **Attendance:** Theo dõi lịch sử vào/ra và tạo đơn nghỉ phép trực tuyến.
 - **Digital Payslip:** Xem và tải phiếu lương hàng tháng.
 
 ---
 
-## 🏗 System Architecture
+## System Architecture
 
-Dự án áp dụng mô hình BE và FE tách biệt hoàn toàn:
-- **Web API:** Đóng vai trò là Single Source of Truth, cung cấp dữ liệu qua JSON.
-- **MVC Server:** Đóng vai trò Render Engine. Khi người dùng thao tác, HTMX sẽ gửi request tới MVC Server, MVC Server gọi API lấy dữ liệu và trả về các mảnh HTML (Partial Views) để cập nhật giao diện mà không cần reload trang.
+Dự án được tổ chức theo mô hình phân lớp (Layered Architecture) nhằm đảm bảo tính tách biệt giữa các thành phần (Separation of Concerns) và khả năng mở rộng
+- **Backend (Web API):**
+   - **Phân chia theo 3 lớp chính (Core Layers):**
+      - **API (Presentation Layer):** Chịu trách nhiệm tiếp nhận HTTP Requests, xử lý xác thực JWT và điều hướng dữ liệu.
+
+      - **Business (Logic Layer):** Nơi chứa toàn bộ nghiệp vụ (Business Logic), các dịch vụ (Services) và xử lý tính toán.
+
+      - **Data (Infrastructure Layer):** Quản lý kết nối SQL Server thông qua Entity Framework Core, Repository Pattern và thực hiện các thao tác Migrations.
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - .NET 8.0 SDK
