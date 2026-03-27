@@ -1,9 +1,9 @@
 ﻿using Business.Abstractions;
-using Business.Dtos.AccountDtos;
 using Data.Abstractions;
 using Data.Entities.Identity;
 using Shared.Wrappers;
 using Microsoft.EntityFrameworkCore;
+using Business.Dtos.UserDtos.AccountDtos;
 
 namespace Application.Services
 {

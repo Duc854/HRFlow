@@ -11,5 +11,7 @@ namespace Data.Abstractions.Repositories
     {
         Task<Employee?> GetByIdAsync(int id);
         Task<List<Employee>> GetAllAsync();
+        IQueryable<Employee> GetEmployeesQuery();
+        void Add(Employee? employee);
     }
 }

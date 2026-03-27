@@ -56,5 +56,6 @@ namespace Data.Persistence.Repositories
 
         public void Add(User user) => _context.Users.Add(user);
         public void Update(User user) => _context.Users.Update(user);
+        public void Delete(User user) => _context.Users.Remove(user);
     }
 }

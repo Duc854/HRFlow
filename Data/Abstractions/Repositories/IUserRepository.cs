@@ -17,5 +17,6 @@ namespace Data.Abstractions.Repositories
         Task<bool> IsExistsAsync(string username, string email);
         void Update(User user);
         void Add(User user);
+        void Delete(User user);
     }
 }

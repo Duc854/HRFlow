@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Business.Abstractions;
 using Business.InternalServices;
 using Application.Services;
+using Business.Services;
 
 namespace Infrastructure.Extensions
 {
@@ -30,6 +31,7 @@ namespace Infrastructure.Extensions
             services.AddScoped<ITokenProvider, JwtTokenProvider>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             //Other

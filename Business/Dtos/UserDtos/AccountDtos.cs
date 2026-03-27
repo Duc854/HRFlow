@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Dtos.AccountDtos
+namespace Business.Dtos.UserDtos.AccountDtos
 {
     public class CreateAccountRequestDto
     {

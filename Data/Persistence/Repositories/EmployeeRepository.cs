@@ -18,9 +18,10 @@ namespace Data.Persistence.Repositories
         public async Task<Employee?> GetByIdAsync(int id)
         {
             return await _context.Employees
+                .Include(e => e.User)
                 .Include(e => e.Department)
                 .Include(e => e.Position)
-                .FirstOrDefaultAsync(e => e.Id == id && !e.IsDeleted);
+                .FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public async Task<List<Employee>> GetAllAsync()
@@ -28,6 +29,21 @@ namespace Data.Persistence.Repositories
             return await _context.Employees
                 .Where(e => !e.IsDeleted)
                 .ToListAsync();
+        }
+
+        public IQueryable<Employee> GetEmployeesQuery()
+        {
+            return _context.Employees
+                .Include(e => e.ActiveContract)
+                .Include(e => e.Department)
+                .Include(e => e.Position)
+                .Include(e => e.User)
+                .AsNoTracking();
+        }
+
+        public void Add(Employee? employee)
+        {
+            _context.Employees.Add(employee!);
         }
     }
 }

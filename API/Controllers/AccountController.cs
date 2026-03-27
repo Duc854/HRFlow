@@ -1,5 +1,5 @@
 ﻿using Business.Abstractions;
-using Business.Dtos.AccountDtos;
+using Business.Dtos.UserDtos.AccountDtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

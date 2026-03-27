@@ -1,4 +1,4 @@
-﻿using Business.Dtos.AccountDtos;
+﻿using Business.Dtos.UserDtos.AccountDtos;
 using Shared.Wrappers;
 using System;
 using System.Collections.Generic;
