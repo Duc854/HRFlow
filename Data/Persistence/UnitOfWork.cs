@@ -37,8 +37,6 @@ namespace Business.Persistence
         public IUserRoleRepository UserRoles => _userRoles ??= new UserRoleRepository(_context);
         public IContractRepository Contracts => _contracts ??= new ContractRepository(_context);
 
-        public IContractRepository Contracts => throw new NotImplementedException();
-
         public async Task<int> CommitAsync()
         {
             return await _context.SaveChangesAsync();
