@@ -36,7 +36,7 @@ namespace Business.Services
                 var query = _unitOfWork.Employees.GetEmployeesQuery();
 
                 bool showDeleted = isHighestPermission && isDeleted;
-                query = query.Where(e => e.IsDeleted == showDeleted);
+                query = query.IgnoreQueryFilters().Where(e => e.IsDeleted == showDeleted);
 
                 // 2. Phân quyền dữ liệu (Scoping)
                 if (!isHighestPermission && identity.IsManager)
@@ -254,6 +254,41 @@ namespace Business.Services
             catch (Exception ex)
             {
                 return ResponseDto<EmployeeListDto>.FailResult("500", "Lỗi: " + ex.Message);
+            }
+        }
+
+        public async Task<ResponseDto<bool>> PromoteToManagerAsync(UserIdentity identity, int employeeId)
+        {
+            // 1. Check quyền: Chỉ Admin/Director mới được phong sếp
+            if (!identity.IsAdmin && !identity.IsDirector)
+                return ResponseDto<bool>.FailResult("403", "Bạn không có quyền bổ nhiệm.");
+
+            await _unitOfWork.BeginTransactionAsync();
+            try
+            {
+                var employee = await _unitOfWork.Employees.GetByIdAsync(employeeId);
+                if (employee == null || employee.IsDeleted)
+                    return ResponseDto<bool>.FailResult("404", "Không tìm thấy nhân viên.");
+
+                // 2. Cập nhật ManagerId cho Phòng ban của nhân viên này
+                var dept = await _unitOfWork.Departments.GetByIdAsync(employee.DepartmentId);
+                if (dept == null) return ResponseDto<bool>.FailResult("404", "Phòng ban không tồn tại.");
+
+                dept.ManagerId = employeeId;
+
+                var user = await _unitOfWork.Users.GetByEmployeeIdAsync(employeeId);
+                if (user != null)
+                {
+                    user.UserRoles.Add(new Data.Entities.Identity.UserRole { RoleId = 3, UserId = user.Id });
+                }
+
+                await _unitOfWork.CommitTransactionAsync();
+                return ResponseDto<bool>.SuccessResult(true);
+            }
+            catch (Exception ex)
+            {
+                await _unitOfWork.RollbackTransactionAsync();
+                return ResponseDto<bool>.FailResult("500", ex.Message);
             }
         }
     }

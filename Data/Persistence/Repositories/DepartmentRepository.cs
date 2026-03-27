@@ -27,5 +27,12 @@ namespace Data.Persistence.Repositories
         {
             return _context.Departments.AsNoTracking();
         }
+
+        public async Task<Department?> GetByIdAsync(int id)
+        {
+            return await _context.Departments
+                .Include(d => d.Manager)
+                .FirstOrDefaultAsync(d => d.Id == id);
+        }
     }
 }

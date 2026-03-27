@@ -87,6 +87,17 @@ namespace API.Controllers
             return result.Success ? Ok(result) : (result.ErrorCode == "403" ? Forbid() : BadRequest(result));
         }
 
+        [Authorize(Roles = "Admin,Director")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> PromoteToManager(int id)
+        {
+            var identity = HttpContext.GetUserIdentity();
+            if (identity == null) return Unauthorized();
+
+            var result = await _employeeService.PromoteToManagerAsync(identity, id);
+            return result.Success ? Ok(result) : (result.ErrorCode == "403" ? Forbid() : BadRequest(result));
+        }
+
         [Authorize] // Tất cả ai có Token đều vào được
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEmployeeDetail(int id)

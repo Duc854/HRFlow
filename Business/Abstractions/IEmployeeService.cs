@@ -17,5 +17,6 @@ namespace Business.Abstractions
         Task<ResponseDto<bool>> UpdateEmployeeAsync(UserIdentity identity, int id, UpdateEmployeeDto dto);
         Task<ResponseDto<bool>> SoftDeleteEmployeeAsync(UserIdentity identity, int id);
         Task<ResponseDto<EmployeeListDto>> GetEmployeeDetailAsync(UserIdentity identity, int id);
+        Task<ResponseDto<bool>> PromoteToManagerAsync(UserIdentity identity, int employeeId);
     }
 }
