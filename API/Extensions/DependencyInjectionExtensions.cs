@@ -36,6 +36,7 @@ namespace Infrastructure.Extensions
             services.AddScoped<ICommonService,CommonService>();
             services.AddScoped<IDashboardService, DashboardService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IContractService, ContractService>();
 
             //UoW
             services.AddScoped<IUnitOfWork, UnitOfWork>();

@@ -16,6 +16,7 @@ namespace Data.Abstractions
         IPositionRepository Positions { get; }
         IRoleRepository Roles { get; }
         IUserRoleRepository UserRoles { get; }
+        IContractRepository Contracts { get; }
 
 
 
