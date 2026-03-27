@@ -1,13 +1,13 @@
-﻿using Data.Abstractions;
-using Data.Abstractions.Repositories;
-using Data.Context;
-using Data.Persistence.Repositories;
-using Microsoft.EntityFrameworkCore.Storage;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.Abstractions;
+using Data.Abstractions.Repositories;
+using Data.Context;
+using Data.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Business.Persistence
 {
@@ -35,6 +35,7 @@ namespace Business.Persistence
         public IRoleRepository Roles => _role ??= new RoleRepository(_context);
         public IUserRoleRepository UserRoles => _userRoles ??= new UserRoleRepository(_context);
 
+        public IContractRepository Contracts => throw new NotImplementedException();
 
         public async Task<int> CommitAsync()
         {
