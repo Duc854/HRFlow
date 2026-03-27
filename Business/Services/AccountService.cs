@@ -124,7 +124,7 @@ namespace Application.Services
                     Username = u.Username,
                     FullName = u.Employee?.FullName ?? "N/A",
                     Email = u.Email,
-                    Status = u.IsActive ? "Acitve" : "Deactive",
+                    Status = u.IsActive ? "Active" : "Deactive",
                     CreatedAt = u.CreatedDate,
                     Roles = u.UserRoles.Select(ur => ur.Role.Name).ToList()
                 });

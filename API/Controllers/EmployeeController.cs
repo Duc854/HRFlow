@@ -88,7 +88,7 @@ namespace API.Controllers
         }
 
         [Authorize(Roles = "Admin,Director")]
-        [HttpDelete("{id}")]
+        [HttpPut("{id}/promote-to-manager")]
         public async Task<IActionResult> PromoteToManager(int id)
         {
             var identity = HttpContext.GetUserIdentity();

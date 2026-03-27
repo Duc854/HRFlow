@@ -1,4 +1,5 @@
 ﻿using Data.Entities.HR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace Data.Abstractions.Repositories
     {
         Task<IEnumerable<Department>> GetAllActiveAsync();
         IQueryable<Department> GetDepartmentsQuery();
+        Task<Department?> GetByIdAsync(int id);
     }
 }
