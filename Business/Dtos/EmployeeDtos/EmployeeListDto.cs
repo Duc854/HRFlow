@@ -16,6 +16,7 @@ namespace Business.Dtos.EmployeeDtos
         public string Status { get; set; } = "Active";
         public DateTime JoinDate { get; set; }
         public string? Phone { get; set; }
+        public string? Address { get; set; }
 
         //Manager không xem được
         public string DepartmentName { get; set; } = string.Empty;

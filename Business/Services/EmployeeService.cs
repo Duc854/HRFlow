@@ -84,11 +84,11 @@ namespace Business.Services
                     Status = e.Status,
                     JoinDate = e.JoinDate,
                     HasAccount = e.User != null,
-                    Username = e.User?.Username,
+                    DepartmentName = e.Department?.Name ?? "N/A",
 
                     // --- LOGIC MASKING CHO MANAGER ---
-                    // Chỉ Sếp tổng mới thấy tên Phòng ban và Lương
-                    DepartmentName = isHighestPermission ? (e.Department?.Name ?? "N/A") : "Hidden",
+                    // Chỉ Sếp tổng mới thấy tên Username và Lương
+                    Username = isHighestPermission ? e.User?.Username : "Hidden",
                     BaseSalary = isHighestPermission ? e.ActiveContract?.BasicSalary : null,
 
                     // Số điện thoại cũng nên ẩn với Manager nếu không phải lính trực tiếp? 
@@ -239,11 +239,12 @@ namespace Business.Services
                     Phone = (isHighest || isOwnProfile) ? employee.Phone : "********", // Chính chủ hoặc Sếp mới thấy Phone
                     DoB = employee.DoB,
                     PositionName = employee.Position?.Name ?? "N/A",
-                    DepartmentName = (isHighest || isManagerOfDept || isOwnProfile) ? (employee.Department?.Name ?? "N/A") : "Hidden",
+                    DepartmentName = employee.Department?.Name ?? "N/A",
                     Status = employee.Status,
                     JoinDate = employee.JoinDate,
                     HasAccount = employee.User != null,
                     Username = employee.User?.Username,
+                    Address = (isHighest || isOwnProfile) ? employee.Phone : "N/A",
 
                     // Lương là thông tin siêu nhạy cảm: Chỉ Sếp tổng hoặc Chính chủ mới thấy
                     BaseSalary = (isHighest || isOwnProfile) ? employee.ActiveContract?.BasicSalary : null
