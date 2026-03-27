@@ -12,9 +12,9 @@ namespace Data.Abstractions
         // Danh sách các Repository
         IUserRepository Users { get; }
         IEmployeeRepository Employees { get; }
-        // Sau này bạn thêm các Repository khác ở đây, ví dụ:
-        // IEmployeeRepository Employees { get; }
-        // IDepartmentRepository Departments { get; }
+        IDepartmentRepository Departments { get; }
+        IPositionRepository Positions { get; }
+
 
         // Quản lý SaveChanges
         Task<int> CommitAsync();

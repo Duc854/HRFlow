@@ -32,6 +32,8 @@ namespace Infrastructure.Extensions
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<ICommonService,CommonService>();
+            services.AddScoped<IDashboardService, DashboardService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             //Other
