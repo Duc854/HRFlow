@@ -29,12 +29,15 @@ namespace Infrastructure.Extensions
             //Service
             services.AddScoped<IPasswordHasher,BcryptPasswordHasher>();
             services.AddScoped<ITokenProvider, JwtTokenProvider>();
+
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<ICommonService,CommonService>();
             services.AddScoped<IDashboardService, DashboardService>();
+            services.AddScoped<IRoleService, RoleService>();
 
+            //UoW
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             //Other
             return services;

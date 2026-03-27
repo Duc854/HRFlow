@@ -20,6 +20,8 @@ namespace Business.Persistence
         private IEmployeeRepository? _employees;
         private IDepartmentRepository? _department;
         private IPositionRepository? _position;
+        private IRoleRepository? _role;
+        private IUserRoleRepository? _userRoles;
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -30,6 +32,9 @@ namespace Business.Persistence
         public IEmployeeRepository Employees => _employees ??= new EmployeeRepository(_context);
         public IDepartmentRepository Departments => _department ??= new DepartmentRepository(_context);
         public IPositionRepository Positions => _position ??= new PositionRepository(_context);
+        public IRoleRepository Roles => _role ??= new RoleRepository(_context);
+        public IUserRoleRepository UserRoles => _userRoles ??= new UserRoleRepository(_context);
+
 
         public async Task<int> CommitAsync()
         {

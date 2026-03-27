@@ -3,6 +3,7 @@ using Business.Dtos.UserDtos.AccountDtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Wrappers;
 
 namespace API.Controllers
 {
@@ -61,6 +62,32 @@ namespace API.Controllers
             if (!result.Success)
             {
                 return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("user_list")]
+        [Authorize(Roles = "Admin,Director")]
+        public async Task<IActionResult> GetUserList([FromQuery] string? search, [FromQuery] string? role)
+        {
+            var result = await _accountService.GetUserListAsync(search, role);
+            return Ok(result);
+        }
+
+        [HttpPut("{id}/roles")]
+        [Authorize(Roles = "Admin,Director")]
+        public async Task<IActionResult> UpdateRoles(int id, [FromBody] List<string> roleNames)
+        {
+            var result = await _accountService.UpdateUserRolesAsync(id, roleNames);
+            if (!result.Success)
+            {
+                return result.ErrorCode switch
+                {
+                    "404" => NotFound(result),
+                    "400" => BadRequest(result),
+                    _ => StatusCode(500, result)
+                };
             }
 
             return Ok(result);

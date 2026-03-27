@@ -40,7 +40,7 @@ namespace Data.Persistence.Repositories
                 .Include(u => u.Employee)
                 .Include(u => u.UserRoles)
                     .ThenInclude(ur => ur.Role)
-                .FirstOrDefaultAsync(u => u.Username == username);
+                .FirstOrDefaultAsync(u => u.Username == username && u.IsActive == true);
         }
 
         public async Task<User?> GetByRefreshTokenAsync(string refreshToken)
@@ -57,5 +57,14 @@ namespace Data.Persistence.Repositories
         public void Add(User user) => _context.Users.Add(user);
         public void Update(User user) => _context.Users.Update(user);
         public void Delete(User user) => _context.Users.Remove(user);
+
+        public IQueryable<User> GetUsersQuery()
+        {
+            return _context.Users
+                .Include(u => u.Employee)
+                .Include(u => u.UserRoles)
+                    .ThenInclude(ur => ur.Role)
+                .AsNoTracking();
+        }
     }
 }

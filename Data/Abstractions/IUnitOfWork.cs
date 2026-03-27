@@ -14,6 +14,9 @@ namespace Data.Abstractions
         IEmployeeRepository Employees { get; }
         IDepartmentRepository Departments { get; }
         IPositionRepository Positions { get; }
+        IRoleRepository Roles { get; }
+        IUserRoleRepository UserRoles { get; }
+
 
 
         // Quản lý SaveChanges

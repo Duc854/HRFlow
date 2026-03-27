@@ -10,6 +10,8 @@ namespace Business.Dtos.EmployeeDtos
     {
         public string FullName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
+        public string Gender { get; set; } = string.Empty;
+        public string? Address { get; set; }
         public string? Phone { get; set; }
         public DateTime DoB { get; set; }
         public int DepartmentId { get; set; }

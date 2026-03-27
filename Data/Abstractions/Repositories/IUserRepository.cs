@@ -18,5 +18,6 @@ namespace Data.Abstractions.Repositories
         void Update(User user);
         void Add(User user);
         void Delete(User user);
+        IQueryable<User> GetUsersQuery();
     }
 }
