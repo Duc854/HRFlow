@@ -80,9 +80,9 @@ namespace Data.Context
 
             // 6. Quan hệ 1-1 Employee - Contract
             modelBuilder.Entity<Contract>()
-                .HasOne(c => c.Employee)
-                .WithOne(e => e.ActiveContract)
-                .HasForeignKey<Contract>(c => c.EmployeeId);
+                .HasIndex(c => c.EmployeeId)
+                .IsUnique()
+                .HasFilter("[Status] = 'Active'");
 
             // 7. Cấu hình Decimal (Tiền tệ)
             var decimalProps = modelBuilder.Model.GetEntityTypes()

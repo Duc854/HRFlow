@@ -204,7 +204,6 @@ namespace Business.Services
                 contract.StartDate = dto.StartDate;
                 contract.EndDate = dto.EndDate;
                 contract.BasicSalary = dto.BasicSalary;
-                contract.Status = dto.Status;
 
                 await _unitOfWork.CommitAsync();
                 return ResponseDto<bool>.SuccessResult(true);
@@ -247,11 +246,6 @@ namespace Business.Services
                 // 4. Thực hiện cập nhật
                 contract.Status = "Terminated";
                 contract.EndDate = effectiveDate;
-
-                if (effectiveDate == today && contract.Employee != null)
-                {
-                    contract.Employee.ActiveContract = null;
-                }
 
                 await _unitOfWork.CommitAsync();
                 return ResponseDto<bool>.SuccessResult(true);
