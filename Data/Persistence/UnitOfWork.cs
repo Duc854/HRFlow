@@ -22,6 +22,7 @@ namespace Business.Persistence
         private IPositionRepository? _position;
         private IRoleRepository? _role;
         private IUserRoleRepository? _userRoles;
+        private IContractRepository? _contracts;
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -34,6 +35,7 @@ namespace Business.Persistence
         public IPositionRepository Positions => _position ??= new PositionRepository(_context);
         public IRoleRepository Roles => _role ??= new RoleRepository(_context);
         public IUserRoleRepository UserRoles => _userRoles ??= new UserRoleRepository(_context);
+        public IContractRepository Contracts => _contracts ??= new ContractRepository(_context);
 
 
         public async Task<int> CommitAsync()

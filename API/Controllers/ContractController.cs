@@ -106,5 +106,35 @@ namespace API.Controllers
 
             return Ok(result);
         }
+
+        /// <summary>
+        /// Chấm dứt hợp đồng (Terminate)
+        /// Chỉ cho phép chấm dứt từ ngày hôm nay trở đi
+        /// </summary>
+        /// <param name="id">ID của hợp đồng</param>
+        /// <param name="terminateDate">Ngày kết thúc (Để trống mặc định là hôm nay)</param>
+        [Authorize(Roles = "Admin,Director")]
+        [HttpDelete("{id}/terminate")]
+        public async Task<IActionResult> Terminate(int id, [FromQuery] DateTime? terminateDate)
+        {
+            var identity = HttpContext.GetUserIdentity();
+            if (identity == null) return Unauthorized();
+
+            // Gọi Service xử lý logic "Cấm xuyên không" và "Gán null ActiveContract"
+            var result = await _contractService.TerminateContractAsync(identity, id, terminateDate);
+
+            if (!result.Success)
+            {
+                return result.ErrorCode switch
+                {
+                    "403" => Forbid(),
+                    "404" => NotFound(result),
+                    "400" => BadRequest(result), // Trả về lỗi nếu chọn ngày trong quá khứ
+                    _ => StatusCode(500, result)
+                };
+            }
+
+            return Ok(result);
+        }
     }
 }
