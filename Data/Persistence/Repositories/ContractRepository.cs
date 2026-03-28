@@ -1,12 +1,12 @@
-﻿using Data.Abstractions.Repositories;
-using Data.Context;
-using Data.Entities.Payroll;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.Abstractions.Repositories;
+using Data.Context;
+using Data.Entities.Payroll;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Persistence.Repositories
 {
@@ -43,6 +43,14 @@ namespace Data.Persistence.Repositories
                 .Include(c => c.Employee)
                     .ThenInclude(e => e.Position)
                 .AsNoTracking();
+        }
+
+        public async Task<IEnumerable<Contract>> GetAllContractsByEmployeeIdAsync(int employeeId)
+        {
+            // Lấy hết lịch sử, không lọc Active
+            return await _context.Contracts
+                .Where(c => c.EmployeeId == employeeId)
+                .ToListAsync();
         }
     }
 }

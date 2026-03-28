@@ -1,9 +1,9 @@
-﻿using Data.Entities.Payroll;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.Entities.Payroll;
 
 namespace Data.Abstractions.Repositories
 {
@@ -14,5 +14,6 @@ namespace Data.Abstractions.Repositories
         void Add(Contract contract);
         void Update(Contract contract);
         IQueryable<Contract> GetContractsQuery();
+        Task<IEnumerable<Contract>> GetAllContractsByEmployeeIdAsync(int employeeId);
     }
 }
