@@ -1,9 +1,10 @@
-﻿using Data.Entities.HR;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Data.Entities.HR;
 
 namespace Data.Abstractions.Repositories
 {
@@ -13,5 +14,6 @@ namespace Data.Abstractions.Repositories
         Task<List<Employee>> GetAllAsync();
         IQueryable<Employee> GetEmployeesQuery();
         void Add(Employee? employee);
+        Task<IEnumerable<Employee>> FindAsync(Expression<Func<Employee, bool>> expression);
     }
 }

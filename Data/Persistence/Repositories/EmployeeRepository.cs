@@ -1,12 +1,13 @@
-﻿using Data.Abstractions.Repositories;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+using Data.Abstractions.Repositories;
 using Data.Context;
 using Data.Entities.HR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Persistence.Repositories
 {
@@ -44,6 +45,11 @@ namespace Data.Persistence.Repositories
         public void Add(Employee? employee)
         {
             _context.Employees.Add(employee!);
+        }
+
+        public async Task<IEnumerable<Employee>> FindAsync(Expression<Func<Employee, bool>> expression)
+        {
+            return await _context.Employees.Where(expression).ToListAsync();
         }
     }
 }

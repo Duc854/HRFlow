@@ -37,6 +37,7 @@ namespace API
 
             builder.Services.AddScoped<IProfileService, ProfileService>();
             builder.Services.AddScoped<IAttendanceService, AttendanceService>();
+            builder.Services.AddScoped<IPayrollService, PayrollService>();
 
             var app = builder.Build();
 

@@ -19,6 +19,7 @@ namespace Data.Abstractions
         IContractRepository Contracts { get; }
         ITimeLogRepository TimeLogs { get; }
         ILeaveRequestRepository LeaveRequests { get; }
+        IPayrollRepository Payrolls { get; }
 
 
 

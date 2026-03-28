@@ -24,6 +24,8 @@ namespace Business.Persistence
         // --- 2 BIẾN MỚI THÊM ---
         private ITimeLogRepository? _timeLogs;
         private ILeaveRequestRepository? _leaveRequests;
+        private IPayrollRepository? _payrolls;
+        public IPayrollRepository Payrolls => _payrolls ??= new PayrollRepository(_context);
 
         public UnitOfWork(ApplicationDbContext context)
         {
