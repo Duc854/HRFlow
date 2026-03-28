@@ -1,9 +1,9 @@
-﻿using Data.Abstractions.Repositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.Abstractions.Repositories;
 
 namespace Data.Abstractions
 {
@@ -17,6 +17,8 @@ namespace Data.Abstractions
         IRoleRepository Roles { get; }
         IUserRoleRepository UserRoles { get; }
         IContractRepository Contracts { get; }
+        ITimeLogRepository TimeLogs { get; }
+        ILeaveRequestRepository LeaveRequests { get; }
 
 
 

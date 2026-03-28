@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Data.Abstractions;
 using Data.Abstractions.Repositories;
-using Data.Context;
+using Data.Context; // Nhớ đảm bảo ApplicationDbContext nằm đúng namespace này
 using Data.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -24,6 +21,10 @@ namespace Business.Persistence
         private IUserRoleRepository? _userRoles;
         private IContractRepository? _contracts;
 
+        // --- 2 BIẾN MỚI THÊM ---
+        private ITimeLogRepository? _timeLogs;
+        private ILeaveRequestRepository? _leaveRequests;
+
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
@@ -37,11 +38,14 @@ namespace Business.Persistence
         public IUserRoleRepository UserRoles => _userRoles ??= new UserRoleRepository(_context);
         public IContractRepository Contracts => _contracts ??= new ContractRepository(_context);
 
+        // --- 2 PROPERTY MỚI THÊM ---
+        public ITimeLogRepository TimeLogs => _timeLogs ??= new TimeLogRepository(_context);
+        public ILeaveRequestRepository LeaveRequests => _leaveRequests ??= new LeaveRequestRepository(_context);
+
         public async Task<int> CommitAsync()
         {
             return await _context.SaveChangesAsync();
         }
-
 
         public async Task BeginTransactionAsync()
         {

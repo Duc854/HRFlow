@@ -1,11 +1,11 @@
-﻿using Data.Entities.Common;
-using Data.Entities.HR;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.Entities.Common;
+using Data.Entities.HR;
 
 namespace Data.Entities.Attendance
 {
