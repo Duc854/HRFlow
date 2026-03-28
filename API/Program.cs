@@ -1,3 +1,4 @@
+using Application.Services;
 using HRFlow.Business.Interfaces;
 using HRFlow.Business.Services;
 using Infrastructure.Extensions;
@@ -38,6 +39,7 @@ namespace API
             builder.Services.AddScoped<IProfileService, ProfileService>();
             builder.Services.AddScoped<IAttendanceService, AttendanceService>();
             builder.Services.AddScoped<IPayrollService, PayrollService>();
+            builder.Services.AddScoped<IApprovalService, ApprovalService>();
 
             var app = builder.Build();
 

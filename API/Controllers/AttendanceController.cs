@@ -67,5 +67,19 @@ namespace API.Controllers
             var response = await _attendanceService.CreateLeaveRequestAsync(empId, dto);
             return response.Success ? Ok(response) : BadRequest(response);
         }
+
+        [HttpGet("employee-calendar/{employeeId}")]
+        [Authorize(Roles = "Director,Admin")]
+        public async Task<IActionResult> GetEmployeeCalendar(int employeeId, [FromQuery] int month, [FromQuery] int year)
+        {
+            var response = await _attendanceService.GetEmployeeCalendarForDirectorAsync(employeeId, month, year);
+
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
     }
 }

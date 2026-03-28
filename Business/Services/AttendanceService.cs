@@ -122,5 +122,34 @@ namespace HRFlow.Business.Services
                 ? ResponseDto<bool>.SuccessResult(true)
                 : ResponseDto<bool>.FailResult("DB_ERROR", "Lỗi lưu dữ liệu.");
         }
+        public async Task<ResponseDto<List<TimeLogDto>>> GetEmployeeCalendarForDirectorAsync(int employeeId, int month, int year)
+        {
+            // 1. Kiểm tra xem EmployeeId có tồn tại trong hệ thống không
+            var employee = await _unitOfWork.Employees.GetByIdAsync(employeeId);
+            if (employee == null)
+            {
+                return ResponseDto<List<TimeLogDto>>.FailResult("NOT_FOUND", "Không tìm thấy nhân viên với mã này.");
+            }
+
+            // 2. Gọi Repository để lấy danh sách chấm công trong tháng/năm chỉ định
+            // Hàm GetLogsByMonthAsync bác đã viết ở Repository các bước trước rồi đấy
+            var logs = await _unitOfWork.TimeLogs.GetLogsByMonthAsync(employeeId, month, year);
+
+            // 3. Mapping dữ liệu từ Entity sang DTO để trả về cho Frontend
+            var data = logs.Select(l => new TimeLogDto
+            {
+                Id = l.Id,
+                Date = l.Date,
+                // Ép kiểu TimeSpan sang string định dạng HH:mm để FE dễ hiển thị
+                CheckIn = l.CheckIn.ToString(@"hh\:mm"),
+                CheckOut = l.CheckOut?.ToString(@"hh\:mm"),
+                Status = l.Status
+            })
+            .OrderBy(l => l.Date) // Sắp xếp theo ngày tăng dần cho chuẩn lịch
+            .ToList();
+
+            // 4. Trả về kết quả thành công kèm dữ liệu
+            return ResponseDto<List<TimeLogDto>>.SuccessResult(data);
+        }
     }
 }

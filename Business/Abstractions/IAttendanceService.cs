@@ -11,5 +11,6 @@ namespace HRFlow.Business.Interfaces
         Task<ResponseDto<TimeLogDto>> CheckInAsync(int employeeId);
         Task<ResponseDto<TimeLogDto>> CheckOutAsync(int employeeId);
         Task<ResponseDto<bool>> CreateLeaveRequestAsync(int employeeId, CreateLeaveRequestDto dto);
+        Task<ResponseDto<List<TimeLogDto>>> GetEmployeeCalendarForDirectorAsync(int employeeId, int month, int year);
     }
 }

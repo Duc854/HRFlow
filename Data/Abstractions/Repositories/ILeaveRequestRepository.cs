@@ -5,5 +5,7 @@ namespace Data.Abstractions.Repositories
 {
     public interface ILeaveRequestRepository : IGenericRepository<LeaveRequest>
     {
+        Task<IEnumerable<LeaveRequest>> GetEmployeesOnLeaveByDateAsync(DateTime date);
+        Task<IEnumerable<LeaveRequest>> GetPendingWithEmployeeAsync();
     }
 }
