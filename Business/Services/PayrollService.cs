@@ -14,6 +14,8 @@ namespace HRFlow.Business.Services
     {
         Task<ResponseDto<List<PayrollDto>>> CalculateMonthlyPayrollAsync(int month, int year);
         Task<ResponseDto<List<PayrollDto>>> GetPayrollPreviewAsync(int month, int year);
+        Task<ResponseDto<EmployeePayroll>> GetEmployeePayslipAsync(int employeeId, int month, int year);
+        Task<ResponseDto<bool>> ConfirmPayrollAsync(int month, int year);
     }
 
     public class PayrollService : IPayrollService
@@ -107,6 +109,52 @@ namespace HRFlow.Business.Services
             }
 
             return ResponseDto<List<PayrollDto>>.SuccessResult(data.OrderBy(d => d.EmployeeId).ToList());
+        }
+
+        public async Task<ResponseDto<EmployeePayroll>> GetEmployeePayslipAsync(int employeeId, int month, int year)
+        {
+            var payslips = await _unitOfWork.Payrolls.FindAsync(p =>
+                p.EmployeeId == employeeId &&
+                p.Month == month &&
+                p.Year == year &&
+                p.IsPaid == true);
+
+            var result = payslips.FirstOrDefault();
+
+            if (result == null)
+            {
+                return ResponseDto<EmployeePayroll>.FailResult("Chưa có phiếu lương chính thức cho tháng này.");
+            }
+
+            return ResponseDto<EmployeePayroll>.SuccessResult(result);
+        }
+
+        public async Task<ResponseDto<bool>> ConfirmPayrollAsync(int month, int year)
+        {
+            // 1. Tìm tất cả các bản ghi lương chưa chốt của tháng đó
+            var payrolls = await _unitOfWork.Payrolls.FindAsync(p =>
+                p.Month == month &&
+                p.Year == year &&
+                p.IsPaid == false);
+
+            if (!payrolls.Any())
+            {
+                return ResponseDto<bool>.FailResult("Không tìm thấy dữ liệu lương tạm tính hoặc bảng lương đã được chốt trước đó.");
+            }
+
+            // 2. Cập nhật trạng thái IsPaid = true
+            foreach (var item in payrolls)
+            {
+                item.IsPaid = true;
+                _unitOfWork.Payrolls.Update(item);
+            }
+
+            // 3. Lưu vào Database
+            var result = await _unitOfWork.CommitAsync();
+
+            return result > 0
+                ? ResponseDto<bool>.SuccessResult(true)
+                : ResponseDto<bool>.FailResult("Lỗi hệ thống khi chốt lương.");
         }
     }
 }
