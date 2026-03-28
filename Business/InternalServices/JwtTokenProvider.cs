@@ -44,7 +44,7 @@ namespace Business.InternalServices
                 var roles = user.UserRoles.Select(ur => ur.Role.Name);
                 foreach (var roleName in roles)
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, roleName));
+                    claims.Add(new Claim("role", roleName));
                 }
             }
 

@@ -27,7 +27,11 @@ namespace Presentation.Configurations
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
-                    RoleClaimType = ClaimTypes.Role,
+                    // SỬA DÒNG NÀY: Thay ClaimTypes.Role bằng chuỗi "role"
+                    RoleClaimType = "role",
+
+                    // Thêm dòng này cho đồng bộ với NameIdentifier/unique_name
+                    NameClaimType = "unique_name",
                     ClockSkew = TimeSpan.Zero
                 };
             });

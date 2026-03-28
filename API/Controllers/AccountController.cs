@@ -7,7 +7,6 @@ using Shared.Wrappers;
 
 namespace API.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -22,6 +21,8 @@ namespace API.Controllers
         /// <summary>
         /// Cấp tài khoản mới cho nhân viên (Quan hệ 1-1)
         /// </summary>
+        /// 
+        [Authorize(Roles = "Admin,Director")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateAccount([FromBody] CreateAccountRequestDto input)
         {
@@ -38,6 +39,8 @@ namespace API.Controllers
         /// <summary>
         /// Khóa hoặc Mở khóa tài khoản (Active/Inactive)
         /// </summary>
+        /// 
+        [Authorize(Roles = "Admin,Director")]
         [HttpPatch("{id}/toggle-status")]
         public async Task<IActionResult> ToggleStatus(int id)
         {
@@ -54,6 +57,8 @@ namespace API.Controllers
         /// <summary>
         /// Reset mật khẩu nhân viên về một mật khẩu mới
         /// </summary>
+        /// 
+        [Authorize(Roles = "Admin,Director")]
         [HttpPut("{id}/reset-password")]
         public async Task<IActionResult> ResetPassword(int id, [FromBody] string newPassword)
         {
