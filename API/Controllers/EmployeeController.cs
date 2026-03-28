@@ -28,7 +28,7 @@ namespace API.Controllers
             [FromQuery] bool isDeleted = false)
         {
             var identity = HttpContext.GetUserIdentity();
-            if(identity == null)
+            if (identity == null)
                 return Unauthorized();
 
             var result = await _employeeService.GetEmployeeListAsync(

@@ -1,3 +1,6 @@
+using Application.Services;
+using HRFlow.Business.Interfaces;
+using HRFlow.Business.Services;
 using Infrastructure.Extensions;
 using Presentation.Configurations;
 using Shared.Models;
@@ -32,6 +35,12 @@ namespace API
             builder.Services.Configure<JwtSettings>(
                 builder.Configuration.GetSection("Jwt")
             );
+
+            builder.Services.AddScoped<IProfileService, ProfileService>();
+            builder.Services.AddScoped<IAttendanceService, AttendanceService>();
+            builder.Services.AddScoped<IPayrollService, PayrollService>();
+            builder.Services.AddScoped<IApprovalService, ApprovalService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

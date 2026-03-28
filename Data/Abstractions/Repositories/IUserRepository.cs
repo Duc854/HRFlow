@@ -1,9 +1,9 @@
-﻿using Data.Entities.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.Entities.Identity;
 
 namespace Data.Abstractions.Repositories
 {
@@ -19,5 +19,6 @@ namespace Data.Abstractions.Repositories
         void Add(User user);
         void Delete(User user);
         IQueryable<User> GetUsersQuery();
+        Task<User?> GetUserWithFullProfileAsync(int userId);
     }
 }
